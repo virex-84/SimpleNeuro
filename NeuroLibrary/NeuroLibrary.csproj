@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5ABFA5CD-1DDA-45A2-AB4D-884307C2BFCC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NeuroLibrary</RootNamespace>
+    <AssemblyName>NeuroLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BigNumber.cs" />
+    <Compile Include="Neuro\Activations.cs" />
+    <Compile Include="Neuro\Data.cs" />
+    <Compile Include="Neuro\Initializers\Constant.cs" />
+    <Compile Include="Neuro\Initializers\GlorotNormal.cs" />
+    <Compile Include="Neuro\Initializers\GlorotUniform.cs" />
+    <Compile Include="Neuro\Initializers\InitializerBase.cs" />
+    <Compile Include="Neuro\Initializers\Normal.cs" />
+    <Compile Include="Neuro\Initializers\Uniform.cs" />
+    <Compile Include="Neuro\Initializers\Zeros.cs" />
+    <Compile Include="Neuro\Layers\Concatenate.cs" />
+    <Compile Include="Neuro\Layers\Convolution.cs" />
+    <Compile Include="Neuro\Layers\Dense.cs" />
+    <Compile Include="Neuro\Layers\Flatten.cs" />
+    <Compile Include="Neuro\Layers\Input.cs" />
+    <Compile Include="Neuro\Layers\Lambda.cs" />
+    <Compile Include="Neuro\Layers\LayerBase.cs" />
+    <Compile Include="Neuro\Layers\Merge.cs" />
+    <Compile Include="Neuro\Layers\Pooling.cs" />
+    <Compile Include="Neuro\Loss.cs" />
+    <Compile Include="Neuro\Models\Flow.cs" />
+    <Compile Include="Neuro\Models\ModelBase.cs" />
+    <Compile Include="Neuro\Models\Sequential.cs" />
+    <Compile Include="Neuro\NeuralNetwork.cs" />
+    <Compile Include="Neuro\Optimizers\Adam.cs" />
+    <Compile Include="Neuro\Optimizers\OptimizerBase.cs" />
+    <Compile Include="Neuro\Optimizers\SGD.cs" />
+    <Compile Include="Neuro\Tensors\Shape.cs" />
+    <Compile Include="Neuro\Tensors\Tensor.cs" />
+    <Compile Include="Neuro\Tensors\TensorOpCpu.cs" />
+    <Compile Include="Neuro\Tensors\TensorOpMultiCpu.cs" />
+    <Compile Include="Neuro\Tools.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
