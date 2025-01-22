@@ -203,7 +203,7 @@ namespace NeuroTeach
 
             net.Optimize(new SGD(), Loss.MeanSquareError);
 
-            net.Fit(trainingData, 4, 200, null, 1, Track.Nothing);
+            net.Fit(trainingData, 4, 1200, null, 1, Track.Nothing);
 
             for (int i = 0; i < trainingData.Count; ++i)
             {
