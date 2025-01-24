@@ -217,6 +217,56 @@ namespace NeuroTeach
             return net;
         }
 
+        static NeuralNetwork TestMULInfinity()
+        {
+            List<Data> trainingData = new List<Data>();
+
+            //обучающие данные
+            for (int a = 0; a <= 9; ++a)
+            {
+                for (int b = 0; b <= 9; ++b)
+                {
+                    trainingData.Add(new Data(new Tensor(new float[] { a, b }, new Shape(2)), new Tensor(new float[] { a * b }, new Shape(1))));
+                }
+            }
+
+            //сортируем для лушчей эффективности
+            List<Data> trainingData2 = trainingData
+            .OrderBy(x => x.Outputs.First().GetValues().First())
+            .OrderBy(x => x.Inputs.First().GetValues().First())
+            .OrderBy(x => x.Inputs.Last().GetValues().First())
+            .ToList();
+
+            var net = new NeuralNetwork("simple_net_mul_test_infinity");
+            var model = new Sequential();
+            model.AddLayer(new Flatten(new Shape(2)));
+            model.AddLayer(new Dense(model.LastLayer, 120, Activation.Sigmoid));
+            model.AddLayer(new Dense(model.LastLayer, 64, Activation.Sigmoid));
+            model.AddLayer(new Dense(model.LastLayer, 1, Activation.Linear));
+            net.Model = model;
+
+            net.Optimize(new SGD(), Loss.MeanSquareError);
+
+            repeat:
+            //1 эпоха
+            net.Fit(trainingData2, 4, 1, null, 1, Track.Nothing);
+
+            var errorCount = 0;
+            for (int i = 0; i < trainingData.Count; ++i)
+            {
+                var need = trainingData[i].Output.GetValues().First();
+                var predict = net.Predict(trainingData[i].Input).First().GetValues().First();
+                bool iserror = Math.Round(predict) != need;
+                if (iserror) errorCount++;
+            }
+            Console.WriteLine("Errors: {0}", errorCount);
+
+            //если в нашей таблице умножения хоть одна ошибка - повторяем
+            if (errorCount > 0) goto repeat;
+
+            return net;
+        }
+
         static string DisplayMenu()
         {
             Console.WriteLine("Choose neuro test:");
@@ -226,7 +276,8 @@ namespace NeuroTeach
             Console.WriteLine("3 - XOR");
             Console.WriteLine("4 - SUM");
             Console.WriteLine("5 - SUB");
-            Console.WriteLine("6 - MUL (long time!)");
+            Console.WriteLine("6 - MUL (1200 epochs! long time!)");
+            Console.WriteLine("7 - MUL (teach 100%! very long time!)");
             Console.WriteLine();
             return Console.ReadLine();
         }
@@ -273,6 +324,11 @@ namespace NeuroTeach
                         Console.WriteLine("MUL");
                         net = TestMUL();
                         break;
+                    case "7":
+                        Console.Clear();
+                        Console.WriteLine("MUL");
+                        net = TestMULInfinity();
+                        break;
                     case "":
                         return;
                 }
@@ -302,6 +358,7 @@ namespace NeuroTeach
                                 net.SaveStateXml("sub.xml");
                                 break;
                             case "6":
+                            case "7":
                                 net.SaveStateXml("mul.xml");
                                 break;
                         }
